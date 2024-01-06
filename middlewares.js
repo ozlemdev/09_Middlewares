@@ -15,8 +15,14 @@ const PORT = process.env.PORT || 8000;
 
 //next() for next Function
 
+// Midddleware:
+
 app.get("/", (req, res, next) => {
-  next();
+  req.customData = "Custom Data";
+  res.customDataInResponse = "Custom Data In Response";
+  next(); //Go to next Function.
+
+  //next() çalıştığı için çıktı vermeyecek.
   res.send({
     message: "Middleware running",
   });
@@ -24,6 +30,7 @@ app.get("/", (req, res, next) => {
 
 app.get("/", (req, res) => {
   res.send({
+    customData: [req.customData, res.customDataInResponse],
     message: " Welcome",
   });
 });
